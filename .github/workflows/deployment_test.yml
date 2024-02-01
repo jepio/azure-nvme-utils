@@ -10,9 +10,9 @@ permissions:
 
 jobs:
   builds:
-    runs-on: [self-hosted, 1ES.Pool=github-oss-1es-pool]
     timeout-minutes: 90
     environment: test
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
