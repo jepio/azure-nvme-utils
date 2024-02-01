@@ -30,3 +30,9 @@ jobs:
         run: |
           az account show
           az group list -o table
+          ssh-keygen -t ecdsa -N "" -f tempssh
+          delete_after="$(date --utc -d "+24 hours" +%F-%T)"
+          vm_name="test-foovm"
+          rg="rg-azure-nvme-utils-github-testing"
+          az vm create --image Ubuntu2204 --ssh-key-values @tempssh.pub --admin-username testuser -g "$rg" -l eastus2euap -n "$vm_name" --tags "deleteAfter=$deleteAfter" --os-disk-delete-option Delete --nic-delete-option Delete
+          az vm delete -n "$vm_name"
